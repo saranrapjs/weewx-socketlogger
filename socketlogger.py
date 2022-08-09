@@ -124,21 +124,40 @@ class SocketLogger(weewx.drivers.AbstractDevice):
         message = message.rstrip() # Strip any newline
         line = message.split(',') # Split by comma
         data = dict( [ i.split( '=' ) for i in line] ) # Create dictionary of the values
+
+
         
         _packet['dateTime'] = int(time.time())
         _packet['usUnits'] = weewx.US
-        _packet['outTemp'] = float( data["outTemp"] )
-        _packet['outHumidity'] = float( data["outHumidity"] )
-        _packet['inTemp'] = float( data["inTemp"] )
-        _packet['inHumidity'] = float( data["inHumidity"] )
-        _packet['barometer'] = float( data["barometer"] )
-        _packet['rain'] = self.check_rain( data["dailyrain"] )
-        _packet['windDir'] = float( data["windDir"] )
-        _packet['windSpeed'] = float( data["windSpeed"] )
-        _packet['windGust'] = float( data["windGust"] )
-        _packet['windGustDir'] = float( data["windDir"] )
-        _packet['radiation'] = float( data["radiation"] )
-        _packet['UV'] = float( data["UV"] )
-        _packet['txBatteryStatus'] = float( data["txBatteryStatus"] )
+        if "outTemp" in data:
+            _packet['outTemp'] = float( data["outTemp"] )
+        if "outHumidity" in data:
+            _packet['outHumidity'] = float( data["outHumidity"] )
+        if "inTemp" in data:
+            _packet['inTemp'] = float( data["inTemp"] )
+        if "inHumidity" in data:
+            _packet['inHumidity'] = float( data["inHumidity"] )
+        if "barometer" in data:
+            _packet['barometer'] = float( data["barometer"] )
+        if "dailyrain" in data:
+            _packet['rain'] = self.check_rain( data["dailyrain"] )
+        if "windDir" in data:
+            _packet['windDir'] = float( data["windDir"] )
+        if "windSpeed" in data:
+            _packet['windSpeed'] = float( data["windSpeed"] )
+        if "windGust" in data:
+            _packet['windGust'] = float( data["windGust"] )
+        if "windDir" in data:
+            _packet['windGustDir'] = float( data["windDir"] )
+        if "radiation" in data:
+            _packet['radiation'] = float( data["radiation"] )
+        if "UV" in data:
+            _packet['UV'] = float( data["UV"] )
+        if "txBatteryStatus" in data:
+            _packet['txBatteryStatus'] = float( data["txBatteryStatus"] )
+        if "extraTemp1" in data:
+            _packet['extraTemp1'] = float( data["extraTemp1"] )
+        if "extraHumid1" in data:
+            _packet['extraHumid1'] = float( data["extraHumid1"] )
         #loginf(_packet)
         return _packet
